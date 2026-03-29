@@ -1,0 +1,120 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Login = () => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      localStorage.setItem("token", data.token);
+
+      navigate("/dashboard");
+
+    } catch (err) {
+      setError(err.message);
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+      
+      <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-xl shadow-black/40">
+
+        <h2 className="text-2xl font-semibold text-white mb-2">
+          Welcome Back
+        </h2>
+
+        <p className="text-sm text-zinc-500 mb-8">
+          Login to continue to Apna Saathi
+        </p>
+
+        <form className="space-y-5" onSubmit={handleLogin}>
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-400 text-sm p-3 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm text-zinc-400 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-zinc-500 transition"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-zinc-400 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-zinc-500 transition"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition disabled:opacity-50"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+          <div className="text-center mt-6 text-sm text-zinc-500">
+            Don't have an account?{" "}
+            <button
+              type="button"
+              onClick={() => navigate("/register")}
+              className="text-white hover:underline"
+            >
+              Register
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  );
+};
+
+export default Login;
