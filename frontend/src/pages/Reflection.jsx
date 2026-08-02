@@ -17,7 +17,7 @@ const Reflection = () => {
       try {
 
         const res = await fetch(
-          "http://localhost:5000/api/reflections/today",
+          "https://apna-saathi-production.up.railway.app/api/reflections/today",
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -49,7 +49,7 @@ const Reflection = () => {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/api/reflections",
+        "https://apna-saathi-production.up.railway.app/api/reflections",
         {
           method: "POST",
           headers: {

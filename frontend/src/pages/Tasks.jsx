@@ -16,7 +16,7 @@ const Tasks = () => {
       const today = new Date().toLocaleDateString("en-CA");
 
       const res = await fetch(
-        `http://localhost:5000/api/tasks?date=${today}`,
+        `https://apna-saathi-production.up.railway.app/api/tasks?date=${today}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -39,7 +39,7 @@ const Tasks = () => {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/api/goals",
+        "https://apna-saathi-production.up.railway.app/api/goals",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -71,7 +71,7 @@ const Tasks = () => {
 
       const today = new Date().toLocaleDateString("en-CA");
 
-      await fetch("http://localhost:5000/api/tasks", {
+      await fetch("https://apna-saathi-production.up.railway.app/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const Tasks = () => {
 
   const completeTask = async (id) => {
 
-    await fetch(`http://localhost:5000/api/tasks/${id}`, {
+    await fetch(`https://apna-saathi-production.up.railway.app/api/tasks/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ const Tasks = () => {
 
       if (!window.confirm("Delete this task?")) return;
 
-      await fetch(`http://localhost:5000/api/tasks/${id}`, {
+      await fetch(`https://apna-saathi-production.up.railway.app/api/tasks/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`

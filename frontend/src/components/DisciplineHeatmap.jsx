@@ -16,7 +16,7 @@ const DisciplineHeatmap = () => {
 
         // Heatmap
         const heatmapRes = await fetch(
-          "http://localhost:5000/api/heatmap",
+          "https://apna-saathi-production.up.railway.app/api/heatmap",
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -32,7 +32,7 @@ const DisciplineHeatmap = () => {
 
         // Streak
         const streakRes = await fetch(
-          "http://localhost:5000/api/tasks/streak",
+          "https://apna-saathi-production.up.railway.app/api/tasks/streak",
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -48,7 +48,7 @@ const DisciplineHeatmap = () => {
 
         // Weekly score
         const scoreRes = await fetch(
-          "http://localhost:5000/api/tasks/weekly-score",
+          "https://apna-saathi-production.up.railway.app/api/tasks/weekly-score",
           {
             headers: {
               Authorization: `Bearer ${token}`

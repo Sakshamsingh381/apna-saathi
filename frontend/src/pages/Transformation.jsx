@@ -14,7 +14,7 @@ const Transformation = () => {
   // ================= GET CURRENT TRANSFORMATION =================
   const fetchTransformation = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/transformation/current", {
+      const res = await fetch("https://apna-saathi-production.up.railway.app/api/transformation/current", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ const Transformation = () => {
 
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/transformation", {
+      const res = await fetch("https://apna-saathi-production.up.railway.app/api/transformation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const Transformation = () => {
 
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/transformation/activate", {
+      const res = await fetch("https://apna-saathi-production.up.railway.app/api/transformation/activate", {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`

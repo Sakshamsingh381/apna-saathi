@@ -17,7 +17,7 @@ const FocusAreas = () => {
     try {
 
       const tRes = await fetch(
-        "http://localhost:5000/api/transformation/current",
+        "https://apna-saathi-production.up.railway.app/api/transformation/current",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -36,7 +36,7 @@ const FocusAreas = () => {
       setTransformation(tData.transformation);
 
       const fRes = await fetch(
-        "http://localhost:5000/api/focusareas",
+        "https://apna-saathi-production.up.railway.app/api/focusareas",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -71,7 +71,7 @@ const FocusAreas = () => {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/api/focusareas",
+        "https://apna-saathi-production.up.railway.app/api/focusareas",
         {
           method: "POST",
           headers: {
@@ -110,7 +110,7 @@ const FocusAreas = () => {
     try {
 
       await fetch(
-        `http://localhost:5000/api/focusareas/complete/${id}`,
+        `https://apna-saathi-production.up.railway.app/api/focusareas/complete/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -133,7 +133,7 @@ const FocusAreas = () => {
       if (!window.confirm("Delete this focus area?")) return;
 
       const res = await fetch(
-        `http://localhost:5000/api/focusareas/${id}`,
+        `https://apna-saathi-production.up.railway.app/api/focusareas/${id}`,
         {
           method: "DELETE",
           headers: {

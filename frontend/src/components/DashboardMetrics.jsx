@@ -16,7 +16,7 @@ const DashboardMetrics = () => {
         const token = localStorage.getItem("token");
 
         const dailyRes = await fetch(
-          "http://localhost:5000/api/tasks/daily-score",
+          "https://apna-saathi-production.up.railway.app/api/tasks/daily-score",
           {
             headers: { Authorization: `Bearer ${token}` }
           }
@@ -30,7 +30,7 @@ const DashboardMetrics = () => {
         }
 
         const weeklyRes = await fetch(
-          "http://localhost:5000/api/tasks/weekly-score",
+          "https://apna-saathi-production.up.railway.app/api/tasks/weekly-score",
           {
             headers: { Authorization: `Bearer ${token}` }
           }
@@ -43,7 +43,7 @@ const DashboardMetrics = () => {
         }
 
         const streakRes = await fetch(
-          "http://localhost:5000/api/tasks/streak",
+          "https://apna-saathi-production.up.railway.app/api/tasks/streak",
           {
             headers: { Authorization: `Bearer ${token}` }
           }

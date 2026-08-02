@@ -12,6 +12,8 @@ import BehavioralStateCard from "../components/behavior/BehavioralStateCard";
 import BehavioralTrendSection from "../components/behavior/BehavioralTrendSection";
 import WeeklyIntelligencePanel from "../components/behavior/WeeklyIntelligencePanel";
 
+import CardWrapper from "../components/ui/CardWrapper";
+
 const Dashboard = () => {
 
   const [data, setData] = useState(null);
@@ -26,7 +28,7 @@ const Dashboard = () => {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          "http://localhost:5000/api/insights/dashboard",
+          "https://apna-saathi-production.up.railway.app/api/insights/dashboard",
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -59,7 +61,9 @@ const Dashboard = () => {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="text-zinc-400">Loading dashboard...</div>
+        <div className="flex items-center justify-center h-40 text-zinc-400">
+          Loading your dashboard...
+        </div>
       </DashboardLayout>
     );
   }
@@ -67,7 +71,9 @@ const Dashboard = () => {
   if (!data) {
     return (
       <DashboardLayout>
-        <div className="text-red-500">Failed to load data</div>
+        <div className="flex items-center justify-center h-40 text-red-400">
+          Unable to load dashboard data
+        </div>
       </DashboardLayout>
     );
   }
@@ -75,61 +81,108 @@ const Dashboard = () => {
   return (
     <DashboardLayout>
 
-      {/* Top Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+      <div className="relative px-4 sm:px-6 lg:px-8 py-6 bg-gradient-to-br from-[#0F172A] via-[#0B1220] to-[#020617] min-h-screen text-white overflow-hidden">
 
-        <TodayTasks tasks={data?.todayTasks || []} />
+        {/* 🔥 Background Glow Effects */}
+        <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] bg-indigo-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-100px] right-[-100px] w-[300px] h-[300px] bg-green-500/20 rounded-full blur-3xl"></div>
 
-        <TransformationProgress
-          progress={data?.transformationProgress ?? 0}
-        />
+        {/* 🔥 Subtle Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+
+        {/* Content */}
+        <div className="relative z-10">
+
+          {/* Top Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch mb-8">
+
+            <CardWrapper>
+              <TodayTasks tasks={data?.todayTasks || []} />
+            </CardWrapper>
+
+            <CardWrapper>
+              <TransformationProgress
+                progress={data?.transformationProgress ?? 0}
+              />
+            </CardWrapper>
+
+          </div>
+
+          {/* Prediction + Focus Progress */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch mb-8">
+
+            <CardWrapper>
+              <TransformationPrediction prediction={data?.prediction} />
+            </CardWrapper>
+
+            <CardWrapper>
+              <FocusAreaProgress
+                focusAreas={data?.focusAreas || []}
+              />
+            </CardWrapper>
+
+          </div>
+
+          {/* Behavioral State */}
+          <section className="mb-8">
+            <h2 className="text-lg font-semibold mb-4 text-zinc-200 tracking-wide">
+              Behavioral State
+            </h2>
+
+            <CardWrapper>
+              <BehavioralStateCard
+                state={data?.overallState || "Unknown"}
+                burnoutRisk={data?.burnoutRisk ? "High" : "Low"}
+                emotionalTrend={data?.emotionalTrend || "Stable"}
+                recoveryStatus={data?.recoveryDetected ? "Active" : "Stable"}
+              />
+            </CardWrapper>
+          </section>
+
+          {/* Behavioral Trends */}
+          <section className="mb-8">
+            <h2 className="text-lg font-semibold mb-4 text-zinc-200 tracking-wide">
+              Behavioral Trends
+            </h2>
+
+            <CardWrapper>
+              <BehavioralTrendSection
+                trends={data?.trends || []}
+                moodTrend={data?.moodTrend || []}
+              />
+            </CardWrapper>
+          </section>
+
+          {/* Discipline Heatmap */}
+          <section className="mb-8">
+            <h2 className="text-lg font-semibold mb-4 text-zinc-200 tracking-wide">
+              Discipline Heatmap
+            </h2>
+
+            <CardWrapper>
+              <DisciplineHeatmap />
+            </CardWrapper>
+          </section>
+
+          {/* Weekly Intelligence */}
+          <section>
+            <h2 className="text-lg font-semibold mb-4 text-zinc-200 tracking-wide">
+              Weekly Intelligence
+            </h2>
+
+            <CardWrapper>
+              <WeeklyIntelligencePanel
+                classification={data?.overallState || "Unknown"}
+                moodAverage={data?.weeklyMoodAverage || 0}
+                performanceAverage={`${data?.weeklyPerformanceAverage || 0}%`}
+                weeklyScore={`${data?.weeklyScore || 0}%`}
+              />
+            </CardWrapper>
+          </section>
+
+        </div>
 
       </div>
-
-      {/* Prediction + Focus Progress */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-
-        {/* ✅ FIXED */}
-        <TransformationPrediction prediction={data?.prediction} />
-
-        <FocusAreaProgress
-          focusAreas={data?.focusAreas || []}
-        />
-
-      </div>
-
-      {/* Behavioral State */}
-      <section className="mb-12">
-        <BehavioralStateCard
-          state={data?.overallState || "Unknown"}
-          burnoutRisk={data?.burnoutRisk ? "High" : "Low"}
-          emotionalTrend={data?.emotionalTrend || "Stable"}
-          recoveryStatus={data?.recoveryDetected ? "Active" : "Stable"}
-        />
-      </section>
-
-      {/* Behavioral Trends */}
-      <section className="mb-12">
-        <BehavioralTrendSection
-          trends={data?.trends || []}
-          moodTrend={data?.moodTrend || []}
-        />
-      </section>
-
-      {/* Discipline Heatmap */}
-      <section className="mb-12">
-        <DisciplineHeatmap />
-      </section>
-
-      {/* Weekly Intelligence */}
-      <section>
-        <WeeklyIntelligencePanel
-          classification={data?.overallState || "Unknown"}
-          moodAverage={data?.weeklyMoodAverage || 0}
-          performanceAverage={`${data?.weeklyPerformanceAverage || 0}%`}
-          weeklyScore={`${data?.weeklyScore || 0}%`}
-        />
-      </section>
 
     </DashboardLayout>
   );

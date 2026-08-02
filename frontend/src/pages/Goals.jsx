@@ -17,10 +17,10 @@ const Goals = () => {
     try {
 
       const [goalRes, focusRes] = await Promise.all([
-        fetch("http://localhost:5000/api/goals", {
+        fetch("https://apna-saathi-production.up.railway.app/api/goals", {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        fetch("http://localhost:5000/api/focusareas", {
+        fetch("https://apna-saathi-production.up.railway.app/api/focusareas", {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);
@@ -52,7 +52,7 @@ const Goals = () => {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/api/goals",
+        "https://apna-saathi-production.up.railway.app/api/goals",
         {
           method: "POST",
           headers: {
@@ -90,7 +90,7 @@ const Goals = () => {
     try {
 
       await fetch(
-        `http://localhost:5000/api/goals/complete/${id}`,
+        `https://apna-saathi-production.up.railway.app/api/goals/complete/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -113,7 +113,7 @@ const Goals = () => {
       if (!window.confirm("Delete this goal?")) return;
 
       const res = await fetch(
-        `http://localhost:5000/api/goals/${id}`,
+        `https://apna-saathi-production.up.railway.app/api/goals/${id}`,
         {
           method: "DELETE",
           headers: {
